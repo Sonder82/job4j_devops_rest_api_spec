@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Calculator API
+  version: 1
+  description: API для выполнения операций сложения и хранения результатов.
+paths:
+  /calc/summarise:
+    post:
+      summary: Выполняет операцию сложения и сохраняет результат
+      operationId: summarise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TwoArgs'
+      responses:
+        '200':
+          description: Результат операции
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+
+  /calc/:
+    get:
+      summary: Получает все результаты операций
+      operationId: getLogs
+      responses:
+        '200':
+          description: Список всех результатов операций
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Result'
+
+components:
+  schemas:
+    Result:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        first:
+          type: number
+          description: Первый аргумент операции
+        second:
+          type: number
+          description: Второй аргумент операции
+        result:
+          type: number
+          description: Результат операции
+        createDate:
+          type: string
+          format: date
+          nullable: true
+          description: Дата создания записи
+        calcEventType:
+          type: string
+          description: Тип события (например, SUM, SUBTRACT)
+    TwoArgs:
+      type: object
+      properties:
+        first:
+          type: number
+          description: Первый аргумент операции
+        second:
+          type: number
+          description: Второй аргумент операции
