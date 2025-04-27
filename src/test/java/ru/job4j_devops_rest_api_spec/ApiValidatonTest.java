@@ -4,11 +4,13 @@ import com.atlassian.oai.validator.restassured.OpenApiValidationFilter;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Paths;
+
 public class ApiValidatonTest {
 
     private static final OpenApiValidationFilter validationFilter =
             new OpenApiValidationFilter(
-                    ApiValidatonTest.class.getClassLoader().getResource("swagger.yaml").toString()
+                    Paths.get("swagger.yaml").toUri().toString()
             );
 
     @Test
